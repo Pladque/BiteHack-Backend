@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 
 class Tag(models.Model):
-    content = models.CharField(max_length=50, null=False)
+    content = models.CharField(max_length=50, null=False, unique=True)
 
     def __str__(self):
         return '{}'.format(self.content)

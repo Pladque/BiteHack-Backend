@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snowledge</title>
+</head>
+<body>
+    <h1>
+        {% for tag in question_object.tags %}
+            {{ tag }},
+        {% endfor %}
+    </h1>
+    <p>{{ question_object.content }}</p>
+</body>
+</html>
