@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
         <form method= "POST">
-            {% csrf_token%}
+            {% csrf_token %}
             <fieldset class="form-group">
                 {{form}}
             </fieldset>
@@ -13,5 +13,4 @@
                 <button type="submit" class="button-action">Login</button>
             </div>
         </form>
-
 {% endblock %}
