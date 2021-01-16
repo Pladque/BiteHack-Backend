@@ -1,4 +1,17 @@
 {% extends 'polls/index.html' %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/css/login.css' %}">
+{% endblock %}
 {% block content %}
-{{form}}
+<!-- {{form}} -->
+<form method= "POST">
+    {% csrf_token%}
+    <fieldset class="form-group">
+        {{form}}
+    </fieldset>
+    <div>
+        <button type="submit" class="button-action">Register</button>
+    </div>
+</form>
 {% endblock %}
