@@ -79,4 +79,28 @@ def QuestionDetailView(request, pk):
         ans.save()
     answers = Answer.objects.filter(owner=question)
 
-    return render(request, 'polls/question.html', {'question': question, 'answers': answers})
+    this_user_question = False
+    if request.user == question.owner:
+        this_user_question = True
+
+    return render(request, 'polls/question.html', {'question': question, 'answers': answers, 'this_user_question':this_user_question})
+
+@login_required
+def delete_question(request, pk):
+    question_id = request.resolver_match.kwargs['pk']
+    question = Question.objects.get(id=question_id)
+
+    Question.objects.get(id = question_id).delete()
+
+    next = request.POST.get('back', '/')
+    return HttpResponseRedirect(next)
+
+@login_required
+def mark_as_solved(request, pk):
+    question_id = request.resolver_match.kwargs['pk']
+    question = Question.objects.get(id=question_id)
+
+    Question.objects.get(id = question_id).solved = True
+
+    next = request.POST.get('back', '/')
+    return HttpResponseRedirect(next)
