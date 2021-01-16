@@ -6,7 +6,7 @@ from django.http import HttpResponse
 class Question(models.Model):
     title = models.CharField(max_length=50, null=False)
     content = models.CharField(max_length=3000, null=False)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, null = False)
     date_created = models.DateTimeField(auto_now=True)
 
     def __str__(self):
