@@ -8,13 +8,21 @@
         <form action="{%url 'delete_question' question.id %}" method="POST">
             {% csrf_token %}
             <button class="button-action" type='submit'>Delete question</button>
-            <input type="hidden" name="back" value="{​​{​​request.path}​​}​​">
+            <input type="hidden" name="back" value="{request.path}">
         </form>
+        {% if  question.solved %}
         <form action="{%url 'mark_as_solved' question.id %}"  method="POST">
+            {% csrf_token %}
+                <button class="button-add" type='submit'>Mark as unsolved</button>
+            <input type="hidden" name="back" value="{{request.path}}">
+        </form>
+        {% else %}
+            <form action="{%url 'mark_as_solved' question.id %}"  method="POST">
             {% csrf_token %}
                 <button class="button-add" type='submit'>Mark as solved</button>
             <input type="hidden" name="back" value="{{request.path}}">
-        </form>
+            </form>
+        {% endif %}
     {% endif %}
     <div class="question">
         <h1>{{ question.title }}</h1>
