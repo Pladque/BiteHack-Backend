@@ -18,8 +18,10 @@
         </form>
     </div>
     <div id="right-side">
+        <ul>
         {% for skill in skills %}
-            <h4>{{ skill }}</h4>
+            <li>{{ skill }}</li>
         {% endfor %}
+        </ul>
     </div>
 {% endblock %}
