@@ -48,13 +48,14 @@ def QuestionDetailView(request, pk):
 
     new_answer_content = request.POST.get('answer')        #in html field should be nammed 'answer'
     
-    ans = Answer()
-    ans.content = new_answer_content
-    ans.likes = 0
-    ans.owner = question
+    if new_answer_content is not None:
+        ans = Answer()
+        ans.content = new_answer_content
+        ans.likes = 0
+        ans.owner = question
 
-    ans.save()
+        ans.save()
 
-    answers = Answer.objects.filter(owner=question_id)
+    answers = Answer.objects.filter(owner=question)
 
     return render(request, 'polls/question.html', {'question': question, 'answers': answers})
