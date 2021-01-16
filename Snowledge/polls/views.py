@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from users.models import UserSkills
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def index(request):
@@ -42,7 +43,7 @@ def add_problem(request):
 @login_required
 def MyQuestions(request):
     my_questions = Question.objects.filter(owner=request.user)
-    return render(request, 'polls/MyQuestions.html', {'my_questions': my_questions})
+    return render(request, 'polls/MyQuestions.html', {'questions': my_questions})
 
 
 def user_skills(request):
@@ -100,7 +101,7 @@ def mark_as_solved(request, pk):
     question_id = request.resolver_match.kwargs['pk']
     question = Question.objects.get(id=question_id)
 
-    if  Question.objects.get(id = question_id).solved == False or  Question.objects.get(id = question_id).solved == None:
+    if Question.objects.get(id = question_id).solved == False or Question.objects.get(id = question_id).solved == None:
         Question.objects.get(id = question_id).solved = True
     elif Question.objects.get(id = question_id).solved == True:
         Question.objects.get(id = question_id).solved = False
