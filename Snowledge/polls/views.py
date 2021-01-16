@@ -5,7 +5,8 @@ from .forms import *
 
 # Create your views here.
 def index(request):
-    return render(request, 'polls/index.html')
+    q = Question.objects.all()
+    return render(request, 'polls/index.html', {'questions': q})
 
 
 def add_problem(request):
@@ -26,7 +27,6 @@ def add_problem(request):
                     t = t.save()
                 q.tags.add(t)
             q.save()
-
     else:
         form = NewQuestion()
     return render(request, 'polls/add_problem.html', {'form': form})
@@ -35,6 +35,9 @@ def add_problem(request):
 def get_question(request, question_id):
     question_object = Question.objects.get(id=question_id)
     return render(request, 'polls/question.html', {'question_object': question_object})
+
+
+
 
 @login_required
 def MyQuestions(request):
