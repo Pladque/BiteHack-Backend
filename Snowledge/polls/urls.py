@@ -8,6 +8,6 @@ urlpatterns = [
     path('my_questions/', MyQuestions, name='MyQuestions'),
     path('question/<pk>', QuestionDetailView, name='get_question'),
 
-    path('question/<pk>', delete_question, name='delete_question'),
-    path('question/<pk>', mark_as_solved, name='mark_as_solved')
+    path('delete_question/<pk>', delete_question, name='delete_question'),
+    path('mark_as_solved/<pk>', mark_as_solved, name='mark_as_solved')
 ]

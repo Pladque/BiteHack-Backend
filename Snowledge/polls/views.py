@@ -93,18 +93,21 @@ def delete_question(request, pk):
 
     Question.objects.get(id = question_id).delete()
 
-    next = request.POST.get('back', '/')
-    return HttpResponseRedirect(next)
+    q = Question.objects.all()
+    return render(request, 'polls/homepage.html', {'questions': q})
+
 
 @login_required
 def mark_as_solved(request, pk):
     question_id = request.resolver_match.kwargs['pk']
     question = Question.objects.get(id=question_id)
 
-    if Question.objects.get(id = question_id).solved == False or Question.objects.get(id = question_id).solved == None:
-        Question.objects.get(id = question_id).solved = True
-    elif Question.objects.get(id = question_id).solved == True:
-        Question.objects.get(id = question_id).solved = False
+    if question.solved == False or question.solved == None:
+        question.solved = True
+    elif question.solved == True:
+        question.solved = False
+        
+    question.save()
 
     next = request.POST.get('back', '/')
     return HttpResponseRedirect(next)
