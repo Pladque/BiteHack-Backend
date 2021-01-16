@@ -96,6 +96,7 @@ def QuestionDetailView(request, pk):
         ans = Answer()
         ans.content = new_answer_content
         ans.likes = 0
+        ans.owner_user = request.user
         ans.owner = question
 
         ans.save()
