@@ -92,6 +92,10 @@ int main(int argc, char* argv[])    //czytanie dwoch plikow do maina
         c = fgetc(f1); //czytanie slow
         while(c != '\n')
         {
+            if(c == EOF)
+            {
+                break;
+            }
             if(c == ' ')
             {
                 word.push_back(x);
@@ -117,6 +121,10 @@ int main(int argc, char* argv[])    //czytanie dwoch plikow do maina
         x.clear();
         tag.clear();
         word.clear();
+        if(c == EOF)
+        {
+            break;
+        }
         c = fgetc(f1);
         counter++;
     }
