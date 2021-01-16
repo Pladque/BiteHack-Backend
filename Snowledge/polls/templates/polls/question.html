@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Snowledge</title>
-</head>
-<body>
-    <h1>
-        {% for tag in question_object.tags %}
-            {{ tag }},
-        {% endfor %}
-    </h1>
-    <p>{{ question_object.content }}</p>
-</body>
-</html>
+{% extends 'polls/index.html' %}
+{% block content %}
+    <h1>{{ question.title }}</h1>
+    <p>{{ question.content }}</p>
+    <form action="#" method="post">
+        {% csrf_token %}
+        <textarea name="answer" id="" cols="30" rows="10"></textarea>
+        <input type="submit">
+    </form>
+    {% for answer in answers %}
+    <h1>{{ answers.content }}</h1>
+    {% endfor %}
+{% endblock %}

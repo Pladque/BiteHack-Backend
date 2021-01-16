@@ -32,9 +32,9 @@ def add_problem(request):
     return render(request, 'polls/add_problem.html', {'form': form})
 
 
-def get_question(request, question_id):
-    question_object = Question.objects.get(id=question_id)
-    return render(request, 'polls/question.html', {'question_object': question_object})
+# def get_question(request, question_id):
+#     question_object = Question.objects.get(id=question_id)
+#     return render(request, 'polls/question.html', {'question_object': question_object})
 
 
 @login_required
@@ -46,10 +46,9 @@ def QuestionDetailView(request, pk):
     question_id = request.resolver_match.kwargs['pk']
     question = Question.objects.get(id=question_id)
 
-    new_answer_content =  request.POST.get('answer')        #in html field should be nammed 'answer'
+    new_answer_content = request.POST.get('answer')        #in html field should be nammed 'answer'
     
-    ans = Answer
-    ans.owner = request.user
+    ans = Answer()
     ans.content = new_answer_content
     ans.likes = 0
     ans.owner = question
@@ -58,4 +57,4 @@ def QuestionDetailView(request, pk):
 
     answers = Answer.objects.filter(owner=question_id)
 
-    return render(request, 'polls/QuestionDetailView.html', {'question': question, 'answers': answers})
+    return render(request, 'polls/question.html', {'question': question, 'answers': answers})
