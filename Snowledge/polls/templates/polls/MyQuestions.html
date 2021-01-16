@@ -1,0 +1,15 @@
+{% extends 'polls/index.html' %}
+{% block content %}
+    {% for question in questions %}
+        <a href="/question/{{question.id}}" class="question-link">
+            <div class="question">
+                <div class="question-top">
+                    <h3 class="question-title">{{question.title}}</h3>
+                </div>
+                <div class="question-description">
+                    <p class="question-description-text">{{question.content}}</p>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}
