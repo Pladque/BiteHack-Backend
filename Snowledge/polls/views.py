@@ -17,6 +17,8 @@ def add_problem(request):
             q = Question()
             q.title = form.cleaned_data['title']
             q.content = form.cleaned_data['question']
+            q.solved = False
+            q.owner = request.user
             q.save()
             for tag in form.cleaned_data['tags'].split(','):
                 t = None
@@ -36,8 +38,6 @@ def add_problem(request):
 # def get_question(request, question_id):
 #     question_object = Question.objects.get(id=question_id)
 #     return render(request, 'polls/question.html', {'question_object': question_object})
-
-
 
 @login_required
 def MyQuestions(request):
@@ -100,7 +100,10 @@ def mark_as_solved(request, pk):
     question_id = request.resolver_match.kwargs['pk']
     question = Question.objects.get(id=question_id)
 
-    Question.objects.get(id = question_id).solved = True
+    if  Question.objects.get(id = question_id).solved == False or  Question.objects.get(id = question_id).solved == None:
+        Question.objects.get(id = question_id).solved = True
+    elif Question.objects.get(id = question_id).solved == True:
+        Question.objects.get(id = question_id).solved = False
 
     next = request.POST.get('back', '/')
     return HttpResponseRedirect(next)
