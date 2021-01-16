@@ -16,6 +16,7 @@ button {
     border: none;
     width: 100px;
     height: 30px;
+    margin: 5px;
     border-radius: 5px;
     transition: background-color 0.3s;
     cursor: pointer;
@@ -23,6 +24,10 @@ button {
 
 button:hover {
     background-color: #5fb1de;
+}
+
+.button-a {
+    margin: 3px;
 }
 
 a {
