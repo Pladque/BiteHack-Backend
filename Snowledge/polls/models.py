@@ -19,6 +19,7 @@ class Question(models.Model):
     content = models.CharField(max_length=3000, null=False)
     tags = models.ManyToManyField(Tag)
     date_created = models.DateTimeField(auto_now=True)
+    solved = models.BooleanField(default = False, null = True)
 
     def __str__(self):
         return '{}'.format(self.title)
