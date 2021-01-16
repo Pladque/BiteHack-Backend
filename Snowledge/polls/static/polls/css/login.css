@@ -12,8 +12,22 @@ input {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 10px;
+    display: block;
 }
 
-#content > * {
+.form-group > * {
     margin: 20px;
+}
+
+br {
+    display: none;
+}
+
+fieldset {
+    border: none;
+}
+
+form button {
+    position: absolute;
+    left: 180px;
 }
