@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#main {
+    background-color: #f1f1f1;
+    /* min-width: 100vw; */
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button {
+    background-color: #66c5ea;
+    border: none;
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #5fb1de;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
