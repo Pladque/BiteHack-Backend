@@ -34,4 +34,3 @@ class Answer(models.Model):
 
     class Meta:
         ordering = ('likes',)   #not sure if it work that way xd 
-
