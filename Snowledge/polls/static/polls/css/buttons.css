@@ -1,8 +1,9 @@
 button {
     border: none;
-    width: 100px;
+    min-width: 100px;
     height: 30px;
     margin: 5px;
+    padding: 5px;
     border-radius: 5px;
     transition: background-color 0.3s;
     cursor: pointer;
@@ -26,4 +27,12 @@ button {
 
 .button-action:hover {
     background-color: #5fb1de;
+}
+
+.button-del {
+    background-color: #ea6666;
+}
+
+.button-del:hover {
+    background-color: #dd5a5a;
 }
