@@ -1,0 +1,12 @@
+#content #left-side {
+    display: inline-block;
+    width: 20%;
+    float: left;
+}
+
+#content #right-side {
+    display: inline-block;
+    width: 80%;
+    float: left;
+    margin-top: 20px;
+}
