@@ -29,26 +29,39 @@ def add_problem(request):
     if request.method == 'POST':
         form = NewQuestion(request.POST)
         if form.is_valid():
-            q = Question()
-            q.title = form.cleaned_data['title']
-            q.content = form.cleaned_data['question']
-            q.solved = False
-            q.owner = request.user
-            q.save()
-            for tag in form.cleaned_data['tags'].split(','):
-                t = None
-                try:
-                    t = Tag.objects.get(content=tag)
-                except Tag.DoesNotExist:
-                    t = Tag()
-                    t.content = tag
-                    t = t.save()
-                q.tags.add(t)
-            q.save()
+            request.session['title'] = form.cleaned_data['title']
+            request.session['content'] = form.cleaned_data['question']
+            request.session['solved'] = False
+            request.session['tags'] = form.cleaned_data['tags'].split(',')
+            return HttpResponseRedirect('/similar_results/')
     else:
         form = NewQuestion()
     return render(request, 'polls/add_problem.html', {'form': form})
 
+def get_similar_results(request):
+
+    if request.method == 'POST':
+        q = Question()
+        q.title = request.session['title']
+        q.content = request.session['content']
+        q.solved = request.session['solved']
+        q.owner = request.user
+        q.save()
+        for tag in request.session['tags']:
+            t = None
+            try:
+                t = Tag.objects.get(content=tag)
+            except Tag.DoesNotExist:
+                t = Tag()
+                t.content = tag
+                t = t.save()
+            q.tags.add(t)
+        q.save()
+        return HttpResponseRedirect('/my_questions/')
+    else:
+        questions = get_similar_questions(request.session['content'], request.session['tags'])
+        questions = [x[0] for x in questions]
+        return render(request, 'polls/similar_results.html', {'questions': questions})
 
 # def get_question(request, question_id):
 #     question_object = Question.objects.get(id=question_id)
@@ -59,7 +72,7 @@ def MyQuestions(request):
     my_questions = Question.objects.filter(owner=request.user)
     return render(request, 'polls/MyQuestions.html', {'questions': my_questions})
 
-
+@login_required
 def user_skills(request):
     try:
         usr_skills = UserSkills.objects.get(user=request.user)
@@ -132,3 +145,17 @@ def mark_as_solved(request, pk):
 
     next = request.POST.get('back', '/')
     return HttpResponseRedirect(next)
+
+
+def get_similar_questions(content, tags):
+    ranking = []
+    for quest in Question.objects.all():
+        score = 0
+        for tag in quest.tags.all():
+            if tag in tags:
+                score += 1
+        for word in quest.content:
+            if word in content:
+                score += 1
+        ranking.append([quest, score])
+    return sorted(ranking, key=lambda x: x[1])
