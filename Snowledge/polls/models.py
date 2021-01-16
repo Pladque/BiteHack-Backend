@@ -14,7 +14,7 @@ class Members(models.Model):
     django_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='django_user', null = False, blank=True)
 
 class Question(models.Model):
-    owner = models.ForeignKey(Members, on_delete=models.CASCADE, related_name='member', null = True, blank=True)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='owner', null = True, blank=True)
     title = models.CharField(max_length=50, null=False)
     content = models.CharField(max_length=3000, null=False)
     tags = models.ManyToManyField(Tag)
