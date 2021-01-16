@@ -13,13 +13,13 @@
     <div id="main">
         <nav id="navbar">
             <div id="navbar-left">
-                <img src="{% static 'polls/images/snowflake.png' %}" alt="Logo" id="logo">
+                <a href="/"><img src="{% static 'polls/images/snowflake.png' %}" alt="Logo" id="logo"></a>
             </div>
             <div id="navbar-right">
                 {% if user.is_authenticated %}
-                <button>Logout</button>
+                <a href="/logout"><button>Logout</button></a>
                 {% else %}
-                <a href="/admin"><button>Login</button></a>
+                <a href="/login"><button>Login</button></a>
                 {% endif %}
             </div>
         </nav>
