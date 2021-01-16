@@ -1,15 +1,16 @@
 {% extends 'polls/index.html' %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/css/login.css' %}">
+{% endblock %}
 {% block content %}
     <form method= "POST">
-            {% csrf_token%}
-            <fieldset class="form-group" style="background-color:#e3e3e3;">
-                <legend class="border-bottom mb-4" >Log In</legend>
+            {% csrf_token %}
+            <fieldset class="form-group">
                 {{form}}
             </fieldset>
             <div>
-                <button type = "submit">Submit</button>
+                <button type="submit" class="button-add">Add question</button>
             </div>
         </form>
-
-
 {% endblock %}

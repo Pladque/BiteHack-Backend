@@ -1,10 +1,21 @@
 {% extends 'polls/index.html' %}
 {% block content %}
+    {% if this_user_question %}
+        <form action="{%url 'delete_question' question.id %}" method="POST">
+            {% csrf_token %}
+            <button class="button-action" type='submit'>Delete question</button>
+            <input type="hidden" name="back" value="{​​{​​request.path}​​}​​">
+        </form>
+        <form action="{​​%url 'mark_as_solved' question.id %}​​" method="POST">
+            {% csrf_token %}
+                <button class="button-add" type='submit'>Mark as solved</button>
+            <input type="hidden" name="back" value="{​​{​​request.path}​​}​​">
+        </form>
+    {% endif %}
     <div id="question">
-
+        <h1>{{ question.title }}</h1>
+        <p>{{ question.content }}</p>
     </div>
-    <h1>{{ question.title }}</h1>
-    <p>{{ question.content }}</p>
     <form action="#" method="post">
         {% csrf_token %}
         <textarea name="answer" id="" cols="30" rows="10"></textarea>
