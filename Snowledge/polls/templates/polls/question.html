@@ -1,4 +1,8 @@
 {% extends 'polls/index.html' %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/css/questions.css' %}">
+{% endblock %}
 {% block content %}
     {% if this_user_question %}
         <form action="{%url 'delete_question' question.id %}" method="POST">
@@ -12,16 +16,18 @@
             <input type="hidden" name="back" value="{{request.path}}">
         </form>
     {% endif %}
-    <div id="question">
+    <div class="question">
         <h1>{{ question.title }}</h1>
         <p>{{ question.content }}</p>
     </div>
-    <form action="#" method="post">
+    {% for answer in answers %}
+    <div class="question">
+        <p>{{ answer.content }}</p>
+    </div>
+    {% endfor %}
+    <form action="" method="post">
         {% csrf_token %}
-        <textarea name="answer" id="" cols="30" rows="10"></textarea>
+        <textarea name="answer"></textarea>
         <input type="submit">
     </form>
-    {% for answer in answers %}
-        <h1>{{ answer.content }}</h1>
-    {% endfor %}
 {% endblock %}

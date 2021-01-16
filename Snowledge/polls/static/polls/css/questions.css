@@ -4,9 +4,17 @@
     margin-top: 20px;
     padding: 20px;
     width: calc(100% - 200px);
-    height: 100px;
+    min-height: 100px;
     background-color: white;
     border-radius: 10px;
+}
+
+#content .question-unsolved {
+    background-image: linear-gradient(135deg, white 95%, #ea6666 97%)
+}
+
+#content .question-solved {
+    background-image: linear-gradient(135deg, white 95%, #66ea7c 97%)
 }
 
 #content .question-top .question-title {
@@ -22,4 +30,14 @@
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+}
+
+#content textarea {
+    min-width: calc(100% - 200px);
+    max-width: calc(100% - 200px);
+    padding: 20px;
+    margin-top: 20px;
+    min-height: 150px;
+    border-radius: 10px;
+    border: none;
 }
