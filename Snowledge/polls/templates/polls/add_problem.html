@@ -2,6 +2,7 @@
 {% block css %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'polls/css/login.css' %}">
+<link rel="stylesheet" href="{% static 'polls/css/addProblem.css' %}">
 {% endblock %}
 {% block content %}
     <form method= "POST">
@@ -10,7 +11,7 @@
                 {{form}}
             </fieldset>
             <div>
-                <button type="submit" class="button-add">Add question</button>
+                <button type="submit" class="button-add" style="left: 95px">Add question</button>
             </div>
         </form>
 {% endblock %}
