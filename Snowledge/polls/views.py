@@ -22,9 +22,11 @@ def index(request):
                 break
         if not found:
             questions_not_for_me.append(question)
+
+            
     return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
 
-
+@login_required
 def add_problem(request):
     if request.method == 'POST':
         form = NewQuestion(request.POST)
@@ -59,7 +61,7 @@ def MyQuestions(request):
     my_questions = Question.objects.filter(owner=request.user)
     return render(request, 'polls/MyQuestions.html', {'questions': my_questions})
 
-
+@login_required
 def user_skills(request):
     try:
         usr_skills = UserSkills.objects.get(user=request.user)
@@ -86,7 +88,7 @@ def user_skills(request):
 
     return render(request, 'polls/user_skills.html', {'form': form, 'skills': usr_skills.skills.all()})
 
-
+@login_required
 def QuestionDetailView(request, pk):
     question_id = request.resolver_match.kwargs['pk']
     question = Question.objects.get(id=question_id)
@@ -96,6 +98,7 @@ def QuestionDetailView(request, pk):
         ans = Answer()
         ans.content = new_answer_content
         ans.likes = 0
+        ans.owner_user = request.user
         ans.owner = question
 
         ans.save()
