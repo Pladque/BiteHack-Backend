@@ -18,6 +18,7 @@ def add_problem(request):
             q.title = form.cleaned_data['title']
             q.content = form.cleaned_data['question']
             q.solved = False
+            q.owner = request.user
             q.save()
             for tag in form.cleaned_data['tags'].split(','):
                 t = None
@@ -37,8 +38,6 @@ def add_problem(request):
 # def get_question(request, question_id):
 #     question_object = Question.objects.get(id=question_id)
 #     return render(request, 'polls/question.html', {'question_object': question_object})
-
-
 
 @login_required
 def MyQuestions(request):
