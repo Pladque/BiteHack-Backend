@@ -20,7 +20,7 @@
             </div>
             <div id="navbar-right">
                 {% if user.is_authenticated %}
-                <a href="#" class="button-a"><button class="button-add">Add question</button></a>
+                <a href="/add_problem" class="button-a"><button class="button-add">Add problem</button></a>
                 <a href="/logout" class="button-a"><button class="button-action">Logout</button></a>
                 {% else %}
                 <a href="/login" class="button-a"><button class="button-action">Login</button></a>

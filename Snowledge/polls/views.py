@@ -6,7 +6,7 @@ from .forms import *
 # Create your views here.
 def index(request):
     q = Question.objects.all()
-    return render(request, 'polls/index.html', {'questions': q})
+    return render(request, 'polls/homepage.html', {'questions': q})
 
 
 def add_problem(request):
