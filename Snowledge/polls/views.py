@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.contrib.auth.decorators import login_required
 from .forms import *
+from users.models import UserSkills
 
 # Create your views here.
 def index(request):
@@ -37,10 +38,32 @@ def get_question(request, question_id):
     return render(request, 'polls/question.html', {'question_object': question_object})
 
 
+
 @login_required
 def MyQuestions(request):
     my_questions = Question.objects.filter(owner=request.user)
     return render(request, 'polls/MyQuestions.html', {'my_questions': my_questions})
+
+
+def user_skills(request):
+    skills = UserSkills.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = AddSkill(request.POST)
+        if form.is_valid():
+            skill = form.cleaned_data['skill']
+            try:
+                skill = Tag.objects.get(content=skill)
+            except Tag.DoesNotExist:
+                skill = Tag()
+                skill.content = skill
+                skill = skill.save()
+            skills.add(skill)
+            skills = UserSkills.objects.get(user=request.user)
+    else:
+        form = AddSkill()
+
+    return render(request, 'polls/user_skills.html', {'form': form, 'skills': skills})
+
 
 def QuestionDetailView(request, pk):
     question_id = request.resolver_match.kwargs['pk']
@@ -48,12 +71,11 @@ def QuestionDetailView(request, pk):
 
     new_answer_content =  request.POST.get('answer')        #in html field should be nammed 'answer'
     
-    ans = Answer
+    ans = Answer()
     ans.owner = request.user
     ans.content = new_answer_content
     ans.likes = 0
     ans.owner = question
-
     ans.save()
 
     answers = Answer.objects.filter(owner=question_id)
