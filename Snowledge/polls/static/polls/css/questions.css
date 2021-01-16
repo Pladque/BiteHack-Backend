@@ -37,6 +37,12 @@
     -webkit-box-orient: vertical;
 }
 
+#content .question-author {
+    color: gray;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
 #content textarea {
     min-width: calc(100% - 200px);
     max-width: calc(100% - 200px);
