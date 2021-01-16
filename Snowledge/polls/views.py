@@ -47,7 +47,13 @@ def MyQuestions(request):
 
 
 def user_skills(request):
-    skills = UserSkills.objects.get(user=request.user)
+    try:
+        usr_skills = UserSkills.objects.get(user=request.user)
+    except UserSkills.DoesNotExist:
+        usr = UserSkills()
+        usr.user = request.user
+        usr.save()
+        usr_skills = UserSkills.objects.get(user=request.user)
     if request.method == 'POST':
         form = AddSkill(request.POST)
         if form.is_valid():
@@ -55,15 +61,16 @@ def user_skills(request):
             try:
                 skill = Tag.objects.get(content=skill)
             except Tag.DoesNotExist:
-                skill = Tag()
-                skill.content = skill
-                skill = skill.save()
-            skills.add(skill)
-            skills = UserSkills.objects.get(user=request.user)
+                s = Tag()
+                s.content = skill
+                s.save()
+
+            usr_skills.skills.add(skill)
+            print(usr_skills.skills.all())
     else:
         form = AddSkill()
 
-    return render(request, 'polls/user_skills.html', {'form': form, 'skills': skills})
+    return render(request, 'polls/user_skills.html', {'form': form, 'skills': usr_skills.skills.all()})
 
 
 def QuestionDetailView(request, pk):
