@@ -8,7 +8,20 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 def index(request):
     q = Question.objects.all()
-    return render(request, 'polls/homepage.html', {'questions': q})
+    
+    my_skills = UserSkills.objects.filter(user = request.user)
+
+    questions_for_me = []
+    questions_not_for_me = []
+    for question in q:
+        for tag in question.tags.all():
+            if tag in my_skills:
+                questions_for_me.append(question)
+                break
+            else:
+                questions_not_for_me.append(question)
+
+    return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
 
 
 def add_problem(request):
