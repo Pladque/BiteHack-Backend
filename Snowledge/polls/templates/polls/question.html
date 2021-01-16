@@ -26,11 +26,11 @@
     {% endif %}
     <div class="question">
         <h1>{{ question.title }}</h1>
-        <p>{{ question.content }}</p>
+        <p>{{ question.content|linebreaksbr }} }}</p>
     </div>
     {% for answer in answers %}
     <div class="question">
-        <p>{{ answer.content }}</p>
+        <p>{{ answer.content|linebreaksbr }}</p>
     </div>
     {% endfor %}
     <form action="" method="post">
