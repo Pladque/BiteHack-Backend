@@ -2,9 +2,10 @@
 {% block css %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'polls/css/login.css' %}">
+<link rel="stylesheet" href="{% static 'polls/css/skills.css' %}">
 {% endblock %}
 {% block content %}
-    <div>
+    <div id="left-side">
     <form method= "POST">
             {% csrf_token%}
             <fieldset class="form-group">
@@ -16,9 +17,9 @@
             </div>
         </form>
     </div>
-    <div>
+    <div id="right-side">
         {% for skill in skills %}
-            <h6>{{ skill }}</h6>
+            <h4>{{ skill }}</h4>
         {% endfor %}
     </div>
 {% endblock %}
