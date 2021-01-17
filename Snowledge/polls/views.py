@@ -8,29 +8,30 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 def index(request):
     q = Question.objects.all()
-    
-    if User.is_authenticated:
+
+
+    if User.is_authenticated: 
+        my_skills = UserSkills.objects.filter(user = request.user)
+
+        questions_for_me = []
+        questions_not_for_me = []
+        tags_for_me = []
+        tags_not_for_me = []
+        found = False
+        for question in q:
+            for tag in question.tags.all():
+                if tag in my_skills:
+                    questions_for_me.append(question)
+                    found = True
+                    tags_for_me.append(question.tags.all())
+                    break
+            if not found:
+                tags_not_for_me.append(question.tags.all())
+                questions_not_for_me.append(question)
+
+        print(len(tags_not_for_me))
+    else:
         return render(request, 'polls/homepage.html', {'questions_for_me': [], 'questions_not_for_me':q})
-    
-    my_skills = UserSkills.objects.filter(user = request.user)
-
-    questions_for_me = []
-    questions_not_for_me = []
-    tags_for_me = []
-    tags_not_for_me = []
-    found = False
-    for question in q:
-        for tag in question.tags.all():
-            if tag in my_skills:
-                questions_for_me.append(question)
-                found = True
-                tags_for_me.append(question.tags.all())
-                break
-        if not found:
-            tags_not_for_me.append(question.tags.all())
-            questions_not_for_me.append(question)
-
-    
 
     return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me, 'tags_for_me':tags_for_me,'tags_not_for_me':tags_not_for_me})
 
