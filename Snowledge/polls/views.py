@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 def index(request):
     q = Question.objects.all()
-
     if User.is_authenticated and not request.user.is_anonymous:
         my_skills = UserSkills.objects.filter(user = request.user)
         questions_for_me = []
@@ -27,6 +26,7 @@ def index(request):
         return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
     else:
         return HttpResponseRedirect('/login/')
+
 
 
 @login_required
