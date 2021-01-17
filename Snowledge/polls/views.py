@@ -52,6 +52,7 @@ def get_similar_results(request):
         q.solved = request.session['solved']
         q.owner = request.user
         q.save()
+        q = Question.objects.get(content=request.session['content'])
         for tag in request.session['tags']:
             t = None
             try:
@@ -96,9 +97,7 @@ def user_skills(request):
                 s = Tag()
                 s.content = skill
                 s.save()
-
             usr_skills.skills.add(skill)
-            print(usr_skills.skills.all())
     else:
         form = AddSkill()
 
@@ -153,12 +152,16 @@ def mark_as_solved(request, pk):
     return HttpResponseRedirect(next)
 
 
-def get_similar_questions(content, tags):
+def get_similar_questions(content, tagss):
     ranking = []
     for quest in Question.objects.all():
         score = 0
+        print(quest.tags.all())
         for tag in quest.tags.all():
-            for t in tags:
+            print(tag, 'srednie')
+            for t in tagss:
+                print(t)
+                print(tag, t, 'dolne')
                 if str(tag) == str(t):
                     score += 10
         for word in quest.content.lower().split(' '):

@@ -8,9 +8,9 @@
         </div>
     </form>
     {% for question in questions %}
-        {% if not question.solved %}
+        {% if question.solved %}
         <a href="/question/{{question.id}}" class="question-link">
-            <div class="question question-unsolved question-clickable">
+            <div class="question question-solved question-clickable">
                 <div class="question-top">
                     <h3 class="question-title">{{question.title}}</h3>
                 </div>
