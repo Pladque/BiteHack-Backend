@@ -29,11 +29,12 @@ def index(request):
                 tags_not_for_me.append(question.tags.all())
                 questions_not_for_me.append(question)
 
-        print(len(tags_not_for_me))
+        questions_and_tags_for_me = zip(questions_for_me, tags_for_me)
+        questions_and_tags_not_for_me = zip(questions_not_for_me, tags_not_for_me)
+        return render(request, 'polls/homepage.html', {'questions_and_tags_for_me': questions_and_tags_for_me, 'questions_and_tags_not_for_me':questions_and_tags_not_for_me})
     else:
         return render(request, 'polls/homepage.html', {'questions_for_me': [], 'questions_not_for_me':q})
 
-    return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me, 'tags_for_me':tags_for_me,'tags_not_for_me':tags_not_for_me})
 
 @login_required
 def add_problem(request):
