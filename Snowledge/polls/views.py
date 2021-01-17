@@ -8,25 +8,28 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 def index(request):
     q = Question.objects.all()
-    if User.is_authenticated:
+
+    if User.is_authenticated: 
+        my_skills = UserSkills.objects.filter(user = request.user)
+
+        questions_for_me = []
+        questions_not_for_me = []
+        found = False
+        for question in q:
+            for tag in question.tags.all():
+                if tag in my_skills:
+                    questions_for_me.append(question)
+                    found = True
+
+                    break
+            if not found:
+
+                questions_not_for_me.append(question)
+
+        return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
+    else:
         return render(request, 'polls/homepage.html', {'questions_for_me': [], 'questions_not_for_me':q})
-    
-    my_skills = UserSkills.objects.filter(user = request.user)
 
-    questions_for_me = []
-    questions_not_for_me = []
-    found = False
-    for question in q:
-        for tag in question.tags.all():
-            if tag in my_skills:
-                questions_for_me.append(question)
-                found = True
-                break
-        if not found:
-            questions_not_for_me.append(question)
-
-
-    return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
 
 @login_required
 def add_problem(request):
@@ -125,7 +128,8 @@ def QuestionDetailView(request, pk):
     if request.user == question.owner:
         this_user_question = True
 
-    return render(request, 'polls/question.html', {'question': question, 'answers': answers, 'this_user_question':this_user_question})
+    tags = question.tags.all()
+    return render(request, 'polls/question.html', {'question': question, 'answers': answers, 'this_user_question':this_user_question, 'tags':tags})
 
 @login_required
 def delete_question(request, pk):
