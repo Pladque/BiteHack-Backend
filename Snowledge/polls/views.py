@@ -158,10 +158,12 @@ def get_similar_questions(content, tags):
     for quest in Question.objects.all():
         score = 0
         for tag in quest.tags.all():
-            if tag in tags:
-                score += 10
+            for t in tags:
+                if str(tag) == str(t):
+                    score += 10
         for word in quest.content.lower().split(' '):
-            if word in content.lower().split(' '):
-                score += 1
+            for w in content.lower().split(' '):
+                if str(w) == str(word):
+                    score += 1
         ranking.append([quest, score])
     return sorted(ranking, key=lambda x: x[1], reverse=True)
