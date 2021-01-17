@@ -161,7 +161,7 @@ def get_similar_questions(content, tags):
             if tag in tags:
                 score += 10
         for word in quest.content.lower().split(' '):
-            if word in content:
+            if word in content.lower().split(' '):
                 score += 1
         ranking.append([quest, score])
     return sorted(ranking, key=lambda x: x[1], reverse=True)
