@@ -8,26 +8,26 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 def index(request):
     q = Question.objects.all()
+    
+    try:
+        if User.is_authenticated: 
+            my_skills = UserSkills.objects.filter(user = request.user)
 
-    if User.is_authenticated: 
-        my_skills = UserSkills.objects.filter(user = request.user)
+            questions_for_me = []
+            questions_not_for_me = []
+            found = False
+            for question in q:
+                for tag in question.tags.all():
+                    if tag in my_skills:
+                        questions_for_me.append(question)
+                        found = True
 
-        questions_for_me = []
-        questions_not_for_me = []
-        found = False
-        for question in q:
-            for tag in question.tags.all():
-                if tag in my_skills:
-                    questions_for_me.append(question)
-                    found = True
+                        break
+                if not found:
+                    questions_not_for_me.append(question)
 
-                    break
-            if not found:
-
-                questions_not_for_me.append(question)
-
-        return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
-    else:
+            return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
+    except:
         return render(request, 'polls/homepage.html', {'questions_for_me': [], 'questions_not_for_me':q})
 
 
