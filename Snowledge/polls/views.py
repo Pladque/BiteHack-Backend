@@ -126,7 +126,9 @@ def QuestionDetailView(request, pk):
     if request.user == question.owner:
         this_user_question = True
 
-    return render(request, 'polls/question.html', {'question': question, 'answers': answers, 'this_user_question':this_user_question})
+    tags = question.tags.all()
+    print(tags)
+    return render(request, 'polls/question.html', {'question': question, 'answers': answers, 'this_user_question':this_user_question, 'tags':tags})
 
 @login_required
 def delete_question(request, pk):
