@@ -9,9 +9,8 @@ from django.http import HttpResponseRedirect
 def index(request):
     q = Question.objects.all()
 
-    if User.is_authenticated: 
+    if User.is_authenticated and not request.user.is_anonymous:
         my_skills = UserSkills.objects.filter(user = request.user)
-
         questions_for_me = []
         questions_not_for_me = []
         found = False
@@ -20,7 +19,6 @@ def index(request):
                 if tag in my_skills:
                     questions_for_me.append(question)
                     found = True
-
                     break
             if not found:
 
@@ -28,7 +26,7 @@ def index(request):
 
         return render(request, 'polls/homepage.html', {'questions_for_me': questions_for_me, 'questions_not_for_me':questions_not_for_me})
     else:
-        return render(request, 'polls/homepage.html', {'questions_for_me': [], 'questions_not_for_me':q})
+        return HttpResponseRedirect('/login/')
 
 
 @login_required
