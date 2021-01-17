@@ -37,7 +37,7 @@ def add_problem(request):
             request.session['title'] = form.cleaned_data['title']
             request.session['content'] = form.cleaned_data['question']
             request.session['solved'] = False
-            request.session['tags'] = form.cleaned_data['tags'].split(',')
+            request.session['tags'] = form.cleaned_data['tags'].split(' ')
             return HttpResponseRedirect('/similar_results/')
     else:
         form = NewQuestion()
@@ -159,9 +159,9 @@ def get_similar_questions(content, tags):
         score = 0
         for tag in quest.tags.all():
             if tag in tags:
-                score += 1
-        for word in quest.content:
+                score += 10
+        for word in quest.content.lower().split(' '):
             if word in content:
                 score += 1
         ranking.append([quest, score])
-    return sorted(ranking, key=lambda x: x[1])
+    return sorted(ranking, key=lambda x: x[1], reverse=True)
