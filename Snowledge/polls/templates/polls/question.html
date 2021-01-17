@@ -11,7 +11,7 @@
             <button class="button-del" type='submit'>Delete question</button>
             <input type="hidden" name="back" value="{request.path}">
         </form>
-        {% if  question.solved %}
+        {% if question.solved %}
         <form action="{%url 'mark_as_solved' question.id %}"  method="POST">
             {% csrf_token %}
                 <button class="button-action" type='submit'>Mark as unsolved</button>
@@ -29,6 +29,11 @@
         <h3>{{ question.title }}</h3>
         <p>{{ question.content|linebreaksbr }}</p>
         <p class="question-author">&#x7E;{{ question.owner }}</p>
+        <div class="question-tags">
+        {% for tag in tags %}
+            <div class="question-tag" style="background-image: linear-gradient(white 90%, rgb({{tag.color_r}}, {{tag.color_g}}, {{tag.color_b}}) 90%);">{{ tag.content }}</div>
+        {% endfor %}
+        </div>
     </div>
     {% for answer in answers %}
     <div class="question">

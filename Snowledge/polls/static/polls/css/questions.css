@@ -43,6 +43,20 @@
     margin-top: 10px;
 }
 
+#content .question-tags {
+    display: flex;
+    flex-direction: row;
+}
+
+#content .question-tag {
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    color: gray;
+    font-size: 12px;
+}
+
 #content textarea {
     min-width: calc(100% - 200px);
     max-width: calc(100% - 200px);
