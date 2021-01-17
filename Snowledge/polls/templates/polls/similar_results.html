@@ -1,11 +1,12 @@
 {% extends 'polls/index.html' %}
 {% block content %}
-        <form method= "POST">
-            {% csrf_token %}
-            <div>
-                <button type="submit" class="button-add">I still want to add a new question</button>
-            </div>
-        </form>
+<div class="more-padding">
+    <form method= "POST">
+        {% csrf_token %}
+        <div>
+            <button type="submit" class="button-add">I still want to add a new question</button>
+        </div>
+    </form>
     {% for question in questions %}
         {% if not question.solved %}
         <a href="/question/{{question.id}}" class="question-link">
@@ -21,5 +22,5 @@
         </a>
         {% endif %}
     {% endfor %}
-
+</div>
 {% endblock %}

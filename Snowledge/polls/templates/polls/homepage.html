@@ -1,5 +1,6 @@
 {% extends 'polls/index.html' %}
 {% block content %}
+<div class="more-padding">
     <h2>Unsolved questions</h2>
     {% for question in questions_for_me %}
         {% if not question.solved %}
@@ -62,4 +63,5 @@
         </a>
         {% endif %}
     {% endfor %}
+</div>
 {% endblock %}

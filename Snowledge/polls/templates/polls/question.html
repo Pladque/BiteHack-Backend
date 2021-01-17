@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{% static 'polls/css/questions.css' %}">
 {% endblock %}
 {% block content %}
+<div class="more-padding">
     {% if this_user_question %}
         <form action="{%url 'delete_question' question.id %}" method="POST" style="display: inline-block; float: left;">
             {% csrf_token %}
@@ -40,4 +41,5 @@
         <textarea name="answer" placeholder="Write the answer..."></textarea>
         <button class="button-add" type='submit' style="display: block;">Send Answer</button>
     </form>
+</div>
 {% endblock %}
