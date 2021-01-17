@@ -2,9 +2,23 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
+from random import randint
+
+def random_color():
+    return randint(0, 256)
 
 class Tag(models.Model):
     content = models.CharField(max_length=50, null=False, unique=True)
+    color_r =  models.IntegerField(default = 0, null=True, blank = True)
+    color_g =  models.IntegerField(default = 0, null=True, blank = True)
+    color_b =  models.IntegerField(default = 0, null=True, blank = True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.color_r =  randint(0, 256)
+        self.color_g =  randint(0, 256)
+        self.color_b =  randint(0, 256)
 
     def __str__(self):
         return '{}'.format(self.content)
