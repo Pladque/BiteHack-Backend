@@ -13,12 +13,12 @@ class Tag(models.Model):
     color_g =  models.IntegerField(default = 0, null=True, blank = True)
     color_b =  models.IntegerField(default = 0, null=True, blank = True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def save(self, *args, **kwargs):
 
         self.color_r =  randint(0, 256)
         self.color_g =  randint(0, 256)
         self.color_b =  randint(0, 256)
+        super(Tag, self).save(*args, **kwargs)
 
     def __str__(self):
         return '{}'.format(self.content)
