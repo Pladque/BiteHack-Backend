@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 def index(request):
     q = Question.objects.all()
-    
     if User.is_authenticated:
         return render(request, 'polls/homepage.html', {'questions_for_me': [], 'questions_not_for_me':q})
     
@@ -44,7 +43,6 @@ def add_problem(request):
     return render(request, 'polls/add_problem.html', {'form': form})
 
 def get_similar_results(request):
-
     if request.method == 'POST':
         q = Question()
         q.title = request.session['title']
@@ -60,8 +58,9 @@ def get_similar_results(request):
             except Tag.DoesNotExist:
                 t = Tag()
                 t.content = tag
-                t = t.save()
+                t.save()
             q.tags.add(t)
+            q.save()
         q.save()
         return HttpResponseRedirect('/my_questions/')
     else:
@@ -97,10 +96,13 @@ def user_skills(request):
                 s = Tag()
                 s.content = skill
                 s.save()
-            usr_skills.skills.add(skill)
+            try:
+                usr_skills.skills.add(skill)
+            except ValueError:
+                request.session['skill'] = skill
+
     else:
         form = AddSkill()
-
     return render(request, 'polls/user_skills.html', {'form': form, 'skills': usr_skills.skills.all()})
 
 @login_required
@@ -156,12 +158,8 @@ def get_similar_questions(content, tagss):
     ranking = []
     for quest in Question.objects.all():
         score = 0
-        print(quest.tags.all())
         for tag in quest.tags.all():
-            print(tag, 'srednie')
             for t in tagss:
-                print(t)
-                print(tag, t, 'dolne')
                 if str(tag) == str(t):
                     score += 10
         for word in quest.content.lower().split(' '):
